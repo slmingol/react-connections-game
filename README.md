@@ -38,6 +38,8 @@ The app will be available at `http://localhost:3000`
 - `npm test` - Run tests in watch mode
 - `npm run test:run` - Run tests once (CI mode)
 - `npm run test:ui` - Open Vitest UI for visual test exploration
+- `npm run storybook` - Start Storybook for component development (requires .jsx refactoring)
+- `npm run build-storybook` - Build static Storybook site
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check code formatting
 - `npm run clean` - Remove all build artifacts and dependencies
@@ -49,6 +51,7 @@ The app will be available at `http://localhost:3000`
 - [React Spring](https://www.react-spring.dev/) for animations
 - [Shadcn/ui](https://ui.shadcn.com/) for primitive components
 - [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/react) for testing
+- [Storybook](https://storybook.js.org/) for component documentation
 - Copied a number of utility functions from a [React Wordle Clone - cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle)
 - Built with [Parcel](https://parceljs.org/)
 - Dockerized with multi-stage builds (Node 20 + nginx)
@@ -82,6 +85,25 @@ npm test              # Watch mode for development
 npm run test:run      # Run once (used in CI)
 npm run test:ui       # Visual test interface
 ```
+
+### Component Documentation (Storybook)
+
+Storybook is configured for component documentation and interactive development:
+```bash
+npm run storybook          # Start Storybook dev server (port 6006)
+npm run build-storybook    # Build static Storybook site
+```
+
+Component stories available:
+- `WordButton` - Interactive word selection button with multiple scenarios
+- `Button` - All button variants and sizes from the design system  
+- `Badge` - Badge variants with game status examples
+
+Storybook includes:
+- Visual component library for isolated development
+- Accessibility checks via @storybook/addon-a11y
+- Automatic documentation generation
+- Integration with Vitest for component testing
 
 #### Similar Projects
 
