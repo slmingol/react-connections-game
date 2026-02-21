@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-slim as builder
+FROM node:20-slim as builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
