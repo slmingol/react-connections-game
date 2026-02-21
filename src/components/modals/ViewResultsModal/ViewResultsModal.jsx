@@ -7,16 +7,26 @@ import BaseModal from "../BaseModal";
 import { GameStatusContext } from "../../../providers/GameStatusProvider";
 import { PuzzleDataContext } from "../../../providers/PuzzleDataProvider";
 import { Button } from "../../ui/button";
+import { trackGameEvent, GameEvents } from "../../../lib/analytics";
 
 function ViewResultsModal() {
   const { submittedGuesses } = React.useContext(GameStatusContext);
   const { gameData } = React.useContext(PuzzleDataContext);
 
+  const handleOpenModal = () => {
+    trackGameEvent(GameEvents.VIEW_RESULTS_CLICKED);
+  };
+
   return (
     <BaseModal
       title=""
       trigger={
-        <Button variant="submit" className="w-full" children={"View Results"} />
+        <Button 
+          variant="submit" 
+          className="w-full" 
+          children={"View Results"} 
+          onClick={handleOpenModal}
+        />
       }
       initiallyOpen={false}
       showActionButton={false}

@@ -6,6 +6,7 @@ import { useToast } from "../ui/use-toast";
 import { shareStatus } from "../../lib/share-game";
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
+import { trackGameEvent, GameEvents } from "../../lib/analytics";
 
 function ShareScoreButton({ buttonText = "Share", className = "" }) {
   const { gameData } = React.useContext(PuzzleDataContext);
@@ -30,15 +31,16 @@ function ShareScoreButton({ buttonText = "Share", className = "" }) {
       <Button
         className={cn(className, "w-full")}
         variant="share"
-        onClick={() =>
+        onClick={() => {
+          trackGameEvent(GameEvents.SHARE_SCORE_CLICKED);
           shareStatus(
             gameData,
             submittedGuesses,
             handleShareToClipboard,
             handleShareFailure,
             true
-          )
-        }
+          );
+        }}
       >
         {buttonText}
       </Button>

@@ -9,6 +9,7 @@ import {
   isGameDataEquivalent,
   isGuessesFromGame,
 } from "../../lib/game-helpers";
+import { trackGameEvent, GameEvents } from "../../lib/analytics";
 export const GameStatusContext = React.createContext();
 
 function GameStatusProvider({ children }) {
@@ -53,6 +54,12 @@ function GameStatusProvider({ children }) {
     if (solvedGameData.length === gameData.length) {
       setIsGameOver(true);
       setIsGameWon(true);
+      
+      // Track game won event
+      trackGameEvent(GameEvents.GAME_WON, {
+        num_guesses: submittedGuesses.length,
+        num_mistakes: submittedGuesses.length - solvedGameData.length,
+      });
     }
     const gameState = { submittedGuesses, solvedGameData, gameData };
     saveGameStateToLocalStorage(gameState);
@@ -63,6 +70,13 @@ function GameStatusProvider({ children }) {
     if (numMistakesUsed >= MAX_MISTAKES) {
       setIsGameOver(true);
       setIsGameWon(false);
+      
+      // Track game lost event
+      trackGameEvent(GameEvents.GAME_LOST, {
+        num_guesses: submittedGuesses.length,
+        num_mistakes: numMistakesUsed,
+        categories_solved: solvedGameData.length,
+      });
     }
     const gameState = { submittedGuesses, solvedGameData, gameData };
     saveGameStateToLocalStorage(gameState);
