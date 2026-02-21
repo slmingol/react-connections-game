@@ -51,7 +51,7 @@ The app will be available at `http://localhost:3000`
 - [React Spring](https://www.react-spring.dev/) for animations
 - [Shadcn/ui](https://ui.shadcn.com/) for primitive components
 - [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/react) for testing
-- [Storybook](https://storybook.js.org/) for component documentation (requires refactoring to use .jsx extensions)
+- [Storybook](https://storybook.js.org/) for component documentation
 - Copied a number of utility functions from a [React Wordle Clone - cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle)
 - Built with [Parcel](https://parceljs.org/)
 - Dockerized with multi-stage builds (Node 20 + nginx)
@@ -88,20 +88,22 @@ npm run test:ui       # Visual test interface
 
 ### Component Documentation (Storybook)
 
-Storybook has been configured for component documentation and development:
+Storybook is configured for component documentation and interactive development:
 ```bash
 npm run storybook          # Start Storybook dev server (port 6006)
 npm run build-storybook    # Build static Storybook site
 ```
 
-**Note**: Storybook currently requires refactoring to work properly. This codebase uses `.js` file extensions for React components containing JSX, which is non-standard for modern build tools like Vite (used by Storybook). To make Storybook fully functional:
-- Rename React component files from `.js` to `.jsx` (e.g., `WordButton.js` → `WordButton.jsx`)
-- Example stories have been created in `src/components/*/` for reference
+Component stories available:
+- `WordButton` - Interactive word selection button with multiple scenarios
+- `Button` - All button variants and sizes from the design system  
+- `Badge` - Badge variants with game status examples
 
-Component stories currently available (once files are refactored):
-- `WordButton` - Interactive word selection button
-- `Button` - All button variants from the design system
-- `Badge` - Badge component with different styles
+Storybook includes:
+- Visual component library for isolated development
+- Accessibility checks via @storybook/addon-a11y
+- Automatic documentation generation
+- Integration with Vitest for component testing
 
 #### Similar Projects
 
