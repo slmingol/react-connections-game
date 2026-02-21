@@ -10,20 +10,48 @@ Anyways..
 
 ## To Run Locally:
 
-```
+### Prerequisites
+- Node.js 20 or higher (`.nvmrc` file included for `nvm` users)
+
+### Development
+```bash
 cd react-connections-game
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 
+### Using Docker
+```bash
+# Build and run locally
+docker-compose up
+
+# Or use pre-built image from GitHub Container Registry
+docker-compose -f docker-compose.simple.yml up
+```
+
+The app will be available at `http://localhost:3000`
+
+### Available Scripts
+- `npm start` - Start development server (alias for `npm run dev`)
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm test` - Run tests in watch mode
+- `npm run test:run` - Run tests once (CI mode)
+- `npm run test:ui` - Open Vitest UI for visual test exploration
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+- `npm run clean` - Remove all build artifacts and dependencies
+
 ### Technology
 
-- [React 18](https://react.dev/)
+- [React 19](https://react.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [React Spring](https://www.react-spring.dev/) for a few animations
+- [React Spring](https://www.react-spring.dev/) for animations
 - [Shadcn/ui](https://ui.shadcn.com/) for primitive components
+- [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/react) for testing
 - Copied a number of utility functions from a [React Wordle Clone - cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle)
 - Built with [Parcel](https://parceljs.org/)
+- Dockerized with multi-stage builds (Node 20 + nginx)
 
 ### Code Organization
 
@@ -36,6 +64,25 @@ npm run dev
 - Custom hooks are in `src/hooks`
   - Both of these are code snippets taken from [Josh Comeau's Blog](https://www.joshwcomeau.com/snippets/)
 
+### CI/CD
+
+This project includes a GitHub Actions workflow that automatically:
+- Runs format checks with Prettier
+- Executes the test suite with Vitest
+- Builds the application
+- Builds and publishes Docker images to GitHub Container Registry (on main branch)
+
+All checks run on every pull request to ensure code quality.
+
+### Testing
+
+Tests are written using Vitest and React Testing Library:
+```bash
+npm test              # Watch mode for development
+npm run test:run      # Run once (used in CI)
+npm run test:ui       # Visual test interface
+```
+
 #### Similar Projects
 
 - [PuzzGrid](https://puzzgrid.com/about) which allows you to create your own games/puzzles, no code required.
@@ -43,7 +90,14 @@ npm run dev
 
 ### Contributing
 
-- Please fork and submit a PR if you'd like!
+Please fork and submit a PR if you'd like! 
+
+**Development Requirements:**
+- Node.js 20+ (use `nvm use` if you have nvm installed)
+- Run `npm install --legacy-peer-deps` to install dependencies
+- Run `npm test` while developing to ensure tests pass
+- Run `npm run format` before committing to maintain code style
+- All PRs must pass CI checks (formatting, tests, build)
 
 ### Projects Built Using This Repo:
 
