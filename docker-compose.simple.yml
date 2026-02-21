@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   connections-game:
     image: ghcr.io/slmingol/react-connections-game:latest
