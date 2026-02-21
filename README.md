@@ -105,6 +105,63 @@ Storybook includes:
 - Automatic documentation generation
 - Integration with Vitest for component testing
 
+### Performance Monitoring & Analytics
+
+This app includes built-in support for performance monitoring and analytics:
+
+#### Core Web Vitals
+
+The app automatically tracks [Core Web Vitals](https://web.dev/vitals/) metrics:
+- **LCP** (Largest Contentful Paint) - Loading performance
+- **INP** (Interaction to Next Paint) - Responsiveness  
+- **CLS** (Cumulative Layout Shift) - Visual stability
+- **FCP** (First Contentful Paint) - Initial render
+- **TTFB** (Time to First Byte) - Server response time
+
+In development mode, these metrics are logged to the console. In production, they can be sent to your analytics provider.
+
+#### Game Analytics
+
+The following game events are automatically tracked:
+- Game lifecycle: `game_won`, `game_lost`
+- Player actions: `guess_submitted`, `guess_correct`, `guess_incorrect`
+- UI interactions: `shuffle_clicked`, `deselect_clicked`, `view_results_clicked`, `share_score_clicked`, `info_modal_opened`
+
+#### Configuring Analytics
+
+The analytics system is provider-agnostic. To enable analytics in production, add one of the following to your HTML:
+
+**Google Analytics 4:**
+```html
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+```
+
+**Plausible Analytics:**
+```html
+<script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
+```
+
+**Custom Analytics:**
+```javascript
+// Set your analytics instance on window object
+window.analytics = {
+  track: (event, properties) => {
+    // Your custom tracking implementation
+  },
+  page: (path) => {
+    // Your custom page view tracking
+  }
+};
+```
+
+All analytics code is located in `src/lib/analytics.js` and `src/lib/performance.js` for easy customization.
+
 #### Similar Projects
 
 - [PuzzGrid](https://puzzgrid.com/about) which allows you to create your own games/puzzles, no code required.

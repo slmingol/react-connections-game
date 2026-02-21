@@ -9,12 +9,17 @@ import {
   AccordionTrigger,
 } from "../../ui/accordion";
 import BaseModal from "../BaseModal";
+import { trackGameEvent, GameEvents } from "../../../lib/analytics";
 
 function InfoModal() {
+  const handleOpenModal = () => {
+    trackGameEvent(GameEvents.INFO_MODAL_OPENED);
+  };
+
   return (
     <BaseModal
       title=""
-      trigger={<Info className="mr-4" />}
+      trigger={<Info className="mr-4" onClick={handleOpenModal} />}
       initiallyOpen={false}
       actionButtonText="Got It!"
     >

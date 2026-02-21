@@ -10,6 +10,7 @@ import {
 
 import { GameStatusContext } from "../../providers/GameStatusProvider";
 import { PuzzleDataContext } from "../../providers/PuzzleDataProvider";
+import { trackGameEvent, GameEvents } from "../../lib/analytics";
 
 function GameControlButtonsPanel({
   shuffledRows,
@@ -29,6 +30,7 @@ function GameControlButtonsPanel({
   const { toast } = useToast();
 
   function deselectAll() {
+    trackGameEvent(GameEvents.DESELECT_CLICKED);
     setGuessCandidate([]);
   }
 
@@ -47,6 +49,10 @@ function GameControlButtonsPanel({
 
       return;
     }
+    
+    // Track guess submission
+    trackGameEvent(GameEvents.GUESS_SUBMITTED);
+    
     // add guess to state
     setSubmittedGuesses([...submittedGuesses, guessCandidate]);
     // check if the guess is correct
@@ -65,6 +71,10 @@ function GameControlButtonsPanel({
     // if the guess is correct:
     // set it as solved in game data
     if (isCorrect) {
+      trackGameEvent(GameEvents.GUESS_CORRECT, {
+        category: correctCategory,
+        difficulty: correctDifficulty,
+      });
       setSolvedGameData([
         ...solvedGameData,
         {
@@ -76,6 +86,9 @@ function GameControlButtonsPanel({
       ]);
       setGuessCandidate([]);
     } else {
+      trackGameEvent(GameEvents.GUESS_INCORRECT, {
+        one_away: isGuessOneAway,
+      });
       // Shake the grid to give feedback that they were wrong
       setGridShake(true);
       if (isGuessOneAway) {
@@ -94,9 +107,10 @@ function GameControlButtonsPanel({
       <Button
         disabled={isGameOver}
         variant="secondary"
-        onClick={() =>
-          setShuffledRows(shuffleGameData({ gameData: shuffledRows }))
-        }
+        onClick={() => {
+          trackGameEvent(GameEvents.SHUFFLE_CLICKED);
+          setShuffledRows(shuffleGameData({ gameData: shuffledRows }));
+        }}
       >
         <Shuffle className="h-4 w-4 mr-2" strokeWidth={1} />
         <p className="select-none">Shuffle</p>
