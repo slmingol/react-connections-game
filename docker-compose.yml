@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  connections-game:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react-connections-game
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+  # Development service (optional - uncomment to use)
+  # connections-game-dev:
+  #   image: node:18-alpine
+  #   container_name: react-connections-game-dev
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   ports:
+  #     - "1234:1234"
+  #   command: sh -c "npm install && npm run dev"
+  #   environment:
+  #     - NODE_ENV=development
+  #   restart: unless-stopped

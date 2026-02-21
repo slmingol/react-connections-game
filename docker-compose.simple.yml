@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  connections-game:
+    image: ghcr.io/slmingol/react-connections-game:latest
+    container_name: react-connections-game
+    ports:
+      - "3000:80"
+    restart: unless-stopped
